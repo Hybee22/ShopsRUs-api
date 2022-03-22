@@ -13,8 +13,18 @@ class InvoiceService {
   }
 
   async getInvoiceById(data) {
-    const { customerId } = data;
+    const { invoiceId } = data;
     const invoiceRes = await Invoice.findOne({
+      where: { invoiceId },
+      attributes: ["customerId", "invoiceId", "description", "amount"],
+    });
+
+    return invoiceRes;
+  }
+
+  async getInvoiceByCustomerId(data) {
+    const { customerId } = data;
+    const invoiceRes = await Invoice.findAll({
       where: { customerId },
       attributes: ["customerId", "invoiceId", "description", "amount"],
     });
