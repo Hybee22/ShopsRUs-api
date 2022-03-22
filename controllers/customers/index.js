@@ -10,6 +10,13 @@ class CustomerController {
   async create(req, res) {
     try {
       const { name, type, dateJoined } = req.body;
+
+      if (!name || !type || !dateJoined) {
+        return errorResMsg(res, 400, {
+          message: "Name, type and date joined are required",
+        });
+      }
+
       const customerId = v4();
       const dataToCreate = {
         name,
