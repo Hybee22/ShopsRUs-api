@@ -46,6 +46,7 @@ class InvoiceService {
     let desc = data;
     const PBD = await this.calculatePercentageDiscounts(userType);
     let totalInvoice = 0;
+    let totalInvoiceWithDeductions = 0;
     let totalGroceriesAmount = 0;
     let totalAmountForOtherItems = 0;
     const totalCalc = desc.map((invoice) => {
@@ -68,19 +69,40 @@ class InvoiceService {
       };
     });
 
+    console.log(totalCalc);
+
     // No Groceries
     if (totalGroceriesAmount === 0) {
-      totalInvoice =
+      totalInvoice = totalCalc[0]?.groceries + totalCalc[0]?.otherItems;
+
+      totalInvoiceWithDeductions =
         totalCalc[0]?.groceries +
         (totalCalc[0]?.otherItems - totalCalc[0]?.otherItems * PBD);
-      return totalInvoice - this.discountPerHundred(totalInvoice);
+      return {
+        totalInvoice,
+        percentageBasedDiscount: totalCalc[0]?.otherItems * PBD,
+        discountPerHundred: this.discountPerHundred(totalInvoiceWithDeductions),
+        totalPayable:
+          totalInvoiceWithDeductions -
+          this.discountPerHundred(totalInvoiceWithDeductions),
+      };
     }
 
     // With Groceries
-    totalInvoice =
+    totalInvoice = totalCalc[1]?.groceries + totalCalc[1]?.otherItems;
+
+    totalInvoiceWithDeductions =
       totalCalc[1]?.groceries +
       (totalCalc[1]?.otherItems - totalCalc[1]?.otherItems * PBD);
-    return totalInvoice - this.discountPerHundred(totalInvoice);
+    // return totalInvoice - this.discountPerHundred(totalInvoice);
+    return {
+      totalInvoice,
+      percentageBasedDiscount: totalCalc[1]?.otherItems * PBD,
+      discountPerHundred: this.discountPerHundred(totalInvoiceWithDeductions),
+      totalPayable:
+        totalInvoiceWithDeductions -
+        this.discountPerHundred(totalInvoiceWithDeductions),
+    };
   }
 
   async calculatePercentageDiscounts(data) {

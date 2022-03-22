@@ -57,7 +57,7 @@ class InvoiceController {
         customerId,
         invoiceId,
         description: JSON.stringify(description),
-        amount: resp,
+        amount: resp.totalPayable,
         CustomerCustomerId: customerId,
       };
 
@@ -77,7 +77,7 @@ class InvoiceController {
         message: "Invoice created successfully",
         data: {
           invoiceId,
-          invoiceTotal: resp,
+          ...resp,
         },
       });
     } catch (error) {
