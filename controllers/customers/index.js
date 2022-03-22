@@ -1,4 +1,5 @@
 import { v4 } from "uuid";
+import moment from "moment";
 import customerService from "../../services/customer-service.js";
 import { successResMsg, errorResMsg } from "../../utilities/response.js";
 import Logger from "../../logger.js";
@@ -13,7 +14,7 @@ class CustomerController {
       const dataToCreate = {
         name,
         type,
-        dateJoined,
+        dateJoined: moment(dateJoined, "MM-DD-YYYY").format(),
         customerId,
       };
       const resp = await customerService.createCustomer(dataToCreate);
@@ -69,6 +70,13 @@ class CustomerController {
   async getByName(req, res) {
     try {
       const { name } = req.query;
+
+      if (name === "") {
+        return errorResMsg(res, 400, {
+          message: "Please add a name to your query",
+        });
+      }
+
       const resp = await customerService.getCustomerByName({ name });
 
       if (!resp) {

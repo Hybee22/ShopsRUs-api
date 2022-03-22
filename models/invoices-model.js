@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     customerId: {
@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     amount: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
   });

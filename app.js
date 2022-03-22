@@ -8,9 +8,15 @@ import logger from "morgan";
 import errorHandler from "./middlewares/error-handler.js";
 import { successResMsg } from "./utilities/response.js";
 
+import customersSeeder from "./seeders/customers.js";
+import discountsSeeder from "./seeders/discounts.js";
+
 import db from "./models/index.js";
 
-db.sequelize.sync({}).then(() => {});
+db.sequelize.sync({}).then(() => {
+  customersSeeder();
+  discountsSeeder();
+});
 
 const app = express();
 

@@ -8,12 +8,10 @@ export default (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING(255),
-      unique: true,
       allowNull: true,
     },
     type: {
       type: DataTypes.ENUM({ values: ["affiliate", "employee"] }),
-      unique: true,
       allowNull: true,
     },
     customerId: {
@@ -23,7 +21,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     dateJoined: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.DATE,
       allowNull: false,
     },
   });

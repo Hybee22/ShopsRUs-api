@@ -27,15 +27,21 @@ class InvoiceController {
       }
 
       let dateDiff = moment().diff(
-        moment(customerRes.dateJoined, "DD-MM-YYYY"),
+        moment(customerRes.dateJoined, "MM-DD-YYYY"),
         "years"
       );
 
-      if (dateDiff >= 2) discountType === "legacy";
+      console.log({ dateDiff });
+
+      if (dateDiff >= 2) discountType = "legacy";
+
+      console.log(discountType);
 
       discountType === "legacy" && dateDiff >= 2
         ? (legacy = true)
         : (legacy = false);
+
+      console.log({ discountType, legacy });
 
       const resp = await invoiceService.getTotal(description, {
         type: discountType,
@@ -43,6 +49,8 @@ class InvoiceController {
       });
 
       const invoiceId = v4();
+
+      console.log(resp);
 
       // Save Invoice Data
       const dataToSave = {

@@ -27,5 +27,13 @@ const port = normalizePort(process.env.PORT || "5050");
 const server = app.listen(port, async () => {
   const address = server.address();
   const bind = typeof address === "string" ? `pipe ${address}` : `port ${port}`;
+  const customersLog = `${chalk.yellow("[?]")} ${chalk.green(
+    "Checking if customers have been seeded..."
+  )}`;
+  const discountsLog = `${chalk.yellow("[?]")} ${chalk.green(
+    "Checking if discounts have been seeded..."
+  )}`;
   console.log(`Listening on ${chalk.green(bind)}`);
+  console.log(customersLog);
+  console.log(discountsLog);
 });

@@ -1,5 +1,5 @@
 import models from "../models/index.js";
-const { Customer } = models;
+const { Customer, Sequelize } = models;
 
 class CustomerService {
   async createCustomer(data) {
@@ -39,6 +39,7 @@ class CustomerService {
           "%" + lookup + "%"
         ),
       },
+      attributes: ["customerId", "name", "type", "dateJoined"],
     });
     return customerRes;
   }

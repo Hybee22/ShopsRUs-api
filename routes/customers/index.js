@@ -7,12 +7,12 @@ const router = express.Router();
 router.post("/", customerController.create);
 
 // FETCH ALL CUSTOMERS
-router.get("/", customerController.getAll);
+router.get("/all", customerController.getAll);
+
+// FETCH CUSTOMER BY NAME
+router.get("/name", customerController.getByName);
 
 // FETCH CUSTOMER BY ID
 router.get("/:customerId", customerController.getById);
-
-// FETCH CUSTOMER BY NAME
-router.get("/", customerController.getByName);
 
 export default router;
